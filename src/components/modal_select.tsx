@@ -3,7 +3,7 @@ import { observer } from "mobx-react"
 import React from "react"
 import { useStore } from "../stores/StoreContext";
 import { PartStore } from "../stores/PartStore";
-import * as ButtonFunctions from "../logic_stuff/ButtonFunc"
+import * as ButtonFunctions from "../logic_stuff/ButtonFunc"//imp
 
 const style = {
     position: 'absolute' as 'absolute',
