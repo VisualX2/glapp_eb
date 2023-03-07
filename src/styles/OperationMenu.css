@@ -1,0 +1,14 @@
+.opMenuStyle {
+    width: 150px;
+    background-color: rgb(231, 231, 231);
+    height: 100%;
+}
+
+.Button {
+    height: 100px;
+    width: 100%;
+    padding-bottom: 0px;
+    text-transform: none;
+    color: rgb(61, 61, 61);
+    font-size: 10px;
+}

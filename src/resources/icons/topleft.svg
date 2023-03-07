@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="56"
+   height="56"
+   viewBox="0 0 6.350004 6.3500035"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <g
+     id="layer1">
+    <path
+       style="fill:#000000;stroke-width:0.264583"
+       d="M 3.1142424,3.7742143 3.7020298,1.8458589"
+       id="path640" />
+    <path
+       style="fill:none;stroke:#4d4d4d;stroke-width:0.264583"
+       d="M 1.361192,5.4860165 V 1.1033905 H 5.4963284"
+       id="path1637" />
+    <text
+       xml:space="preserve"
+       style="font-size:0.816064px;fill:none;stroke:#4d4d4d;stroke-width:0.0680052"
+       x="-3.2728686"
+       y="-0.28201607"
+       id="text1933"
+       transform="scale(-1.0884338,-0.91875134)"><tspan
+         id="tspan1931"
+         style="stroke-width:0.0680052"
+         x="-3.2728686"
+         y="-0.28201607">X</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:0.934848px;fill:#4d4d4d;stroke:#4d4d4d;stroke-width:0.0779039"
+       x="0.40914518"
+       y="3.5030396"
+       id="text2043"
+       transform="scale(0.98165475,1.0186881)"><tspan
+         id="tspan2041"
+         style="fill:#4d4d4d;stroke-width:0.0779039"
+         x="0.40914518"
+         y="3.5030396">Y</tspan></text>
+  </g>
+</svg>
