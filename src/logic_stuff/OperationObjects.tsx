@@ -19,7 +19,7 @@ class Operation {
 
 export class Drill{
     id:string
-    type?: string
+    type: string
     @observable x?:number
     @observable y?:number
     @observable depth?:number
@@ -41,6 +41,7 @@ export class Drill{
 
 export class Cut {
     id:string
+    type: string
     @observable x:number
     @observable y:number
     @observable corner:string
@@ -49,6 +50,7 @@ export class Cut {
         this.x = x
         this.y = y
         this.corner = corner
+        this.type = "cut"
         makeObservable(this)
     }
 }
@@ -56,12 +58,14 @@ export class Cut {
 
 export class СutFace {
     id:string
+    type: string
     @observable angle:number
     @observable side: string
     constructor(angle:number, side:string){
         this.id = uuidv4()
         this.angle = angle
         this.side = side
+        this.type = "cutface"
         makeObservable(this)
     }
 }

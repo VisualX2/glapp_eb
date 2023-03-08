@@ -249,7 +249,7 @@ export const OperationMenu = observer(() => {
                 </Box>
             </Modal>
 
-            <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Радіус</Button>
+            <Button onClick={() => console.log(selectedPart.operationList)} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Радіус</Button>
             <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Єврозамок</Button>
             <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз закритий</Button>
             <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз відкритий</Button>

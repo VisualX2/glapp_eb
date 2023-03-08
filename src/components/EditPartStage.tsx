@@ -65,27 +65,28 @@ export const EditPartStage = observer(() => {
         }
         return sel
     }
-    const isDrill = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Drill => true;
+    const isDrill = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Drill => op.type === "drill";
     const drills = () => {
         var drl = []   
         for (const child of selectedPart.getList()) {
-            if(isDrill(child) && child.x !== undefined && child.y !== undefined && child.depth) {
+            if(isDrill(child) && child.x !== undefined && child.y !== undefined && child.depth !== undefined) {
                 drl.push(<DrillOperation x={child.x} y={child.y} radius={child.radius} partZ={selectedPart.deepness} deep={child.depth}></DrillOperation>);      
             }
         }    
         return drl
     }
-    const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => true;
+    const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
     const cuts = () => {
         var ct = []   
         for (const child of selectedPart.getList()) {
             if(isCut(child) && child.x !== undefined && child.y !== undefined) {
                 ct.push(<CutOperation x={child.x} y={child.y} corner={child.corner} partwidth={selectedPart.width} partheight={selectedPart.height}></CutOperation>);      
+                console.log("ty lokh")
             }
         }    
         return ct
     }
-    const isCutFace = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.СutFace => true;
+    const isCutFace = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.СutFace => op.type === "cutface";
     const cutFaces = () => {
         var ctf = []   
         for (const child of selectedPart.getList()) {
