@@ -18,9 +18,13 @@ export const TableOfOperations = observer(() => {
     const rowData = () => {
         var lt = []
         const isDrill = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Drill => op.type === "drill";
+        const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
         for(const operation of selectedPart.getList()){
             if(isDrill(operation)){
                 lt.push({ID: operation.id, Name: "Отвір", X: operation.x, Y: operation.y, Depth: operation.depth, Misc: "Діаметр = " + operation.radius*2})
+            }
+            else if (isCut(operation)){
+                lt.push({ID: operation.id, Name: "Зріз по площині", X: operation.x, Y: operation.y, Misc: operation.corner})
             }
         }
         return lt;
