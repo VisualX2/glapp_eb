@@ -6,13 +6,16 @@ import { OperationMenu } from './components/OperationMenu';
 import { EditPartStage } from './components/EditPartStage';
 import { useStore } from './stores/StoreContext';
 import { observer } from 'mobx-react';
+import { TableOfOperations } from './components/TableOfOperations';
 
 
 const App =  observer(() =>{
   const store = useStore()
   var eps
+  var table
   if(store.utilStore.selectedpart !== "") {
     eps = <EditPartStage></EditPartStage>
+    table = <TableOfOperations></TableOfOperations>
   }
   return (
     <div className="App">
@@ -20,6 +23,7 @@ const App =  observer(() =>{
       <OperationMenu></OperationMenu>
       <ModalSelectPart></ModalSelectPart>
       {eps}
+      {table}
     </div>
   );
 })
