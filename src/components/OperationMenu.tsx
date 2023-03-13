@@ -31,6 +31,7 @@ export const OperationMenu = observer(() => {
     const [open, setOpen] = React.useState(false);
     const [openCut, setOpenCut] = React.useState(false);
     const [openCutFace, setOpenCutFace] = React.useState(false);
+    const [openRadius, setOpenRadius] = React.useState(false);
 
     const [text_one, setText_one] = React.useState("");
     const [text_two, setText_two] = React.useState("");
@@ -39,6 +40,7 @@ export const OperationMenu = observer(() => {
 
     const [alignment, setAlignment] = React.useState('topleft');
     const [alignmentFace, setAlignmentFace] = React.useState('left');
+    const [alignmentRadius, setAlignmentRadius] = React.useState('topleft');
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.setSelvedgeModeFalse()
@@ -76,6 +78,18 @@ export const OperationMenu = observer(() => {
         setOpenCutFace((previousOpen) => !previousOpen);
     }
 
+    const handleClickRadius = (event: React.MouseEvent<HTMLElement>) => {
+        store.utilStore.sevst.setSelvedgeModeFalse()
+        setOpenRadius((previousOpen) => !previousOpen);
+        setText_one("")
+        setText_two("")
+        setText_three("")
+        setText_four("")
+    };
+    const handleCloseRadius = () => {
+        setOpenRadius((previousOpen) => !previousOpen);
+    }
+
     const handleClick2 = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.selvedgeModeSwitch()
     };
@@ -92,6 +106,12 @@ export const OperationMenu = observer(() => {
     ) => {
         setAlignmentFace(newAlignmentFace);
     };
+    const handleChangeRadius = (
+        event: React.MouseEvent<HTMLElement>,
+        newAlignmentRadius: string,
+    ) => {
+        setAlignmentRadius(newAlignmentRadius);
+    };
     const controlCut = {
         value: alignment,
         onChange: handleChangeCut,
@@ -100,6 +120,11 @@ export const OperationMenu = observer(() => {
     const controlCutFace = {
         value: alignmentFace,
         onChange: handleChangeCutFace,
+        exclusive: true,
+    };
+    const controlRadius = {
+        value: alignmentRadius,
+        onChange: handleChangeRadius,
         exclusive: true,
     };
 
@@ -249,7 +274,40 @@ export const OperationMenu = observer(() => {
                 </Box>
             </Modal>
 
-            <Button onClick={() => console.log(selectedPart.operationList)} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Радіус</Button>
+            <Button onClick={handleClickRadius} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Радіус</Button>
+            
+            <Modal  open={openRadius} onClose={handleCloseRadius}>
+            <Box sx={style}>
+                    <Grid2 container columnSpacing={{ xs: 1, sm: 2, md: 3 }} rowGap={1}>
+                        <Grid2 xs={12}>
+                        <ToggleButtonGroup size="small" {...controlCutFace} aria-label="Small sizes">
+                            <ToggleButton value = "topleft"><Topleft></Topleft></ToggleButton>
+                            <ToggleButton value = "topright"><Topright></Topright></ToggleButton>
+                            <ToggleButton value = "bottomleft"><Bottomleft></Bottomleft></ToggleButton>
+                            <ToggleButton value = "bottomright"><Bottomright></Bottomright></ToggleButton>
+                        </ToggleButtonGroup>
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Радіус:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="radius"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_one(event.target.value) }}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Button onClick={() => {
+                        selectedPart.addRadiusOperation(parseFloat(text_one), alignmentRadius)
+                        setOpenRadius((previousOpen) => !previousOpen)
+                    }}>OK</Button>
+                </Box>
+            </Modal>
+
             <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Єврозамок</Button>
             <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз закритий</Button>
             <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз відкритий</Button>

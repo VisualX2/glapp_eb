@@ -71,18 +71,18 @@ export class СutFace {
 }
 
 
-export class Radius extends Operation {
-    r_tl?:number
-    r_tr?:number
-    r_bl?:number
-    r_br?:number
+export class Radius {
+    id:string
+    type: string
+    @observable r:number
+    @observable side:string
 
-    constructor(r_tl?:number, r_tr?:number, r_bl?:number, r_br?:number){
-        super()
-        this.r_tl = r_tl
-        this.r_tr = r_tr
-        this.r_bl = r_bl
-        this.r_br = r_br
+
+    constructor(r:number, side:string){
+        this.id = uuidv4()
+        this.type = "radius"
+        this.r = r
+        this.side = side
         makeObservable(this)
     }
 }

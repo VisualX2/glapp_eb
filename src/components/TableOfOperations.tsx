@@ -21,7 +21,7 @@ export const TableOfOperations = observer(() => {
         const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
         for(const operation of selectedPart.getList()){
             if(isDrill(operation)){
-                lt.push({ID: operation.id, Name: "Отвір", X: operation.x, Y: operation.y, Depth: operation.depth, Misc: "Діаметр = " + operation.radius*2})
+                lt.push({Num: selectedPart.getList().indexOf(operation) + 1, ID: operation.id, Name: "Отвір", X: operation.x, Y: operation.y, Depth: operation.depth, Misc: "Діаметр = " + operation.radius*2})
             }
             else if (isCut(operation)){
                 lt.push({ID: operation.id, Name: "Зріз по площині", X: operation.x, Y: operation.y, Misc: operation.corner})
@@ -31,17 +31,18 @@ export const TableOfOperations = observer(() => {
     }
 
     const [columnDefs] = useState([
-        { field: 'ID' },
-        { field: 'Name' },
-        { field: 'Side' },
-        { field: 'X' },
-        { field: 'Y' },
-        { field: 'Depth' },
+        { field: 'Num' , width: 90},
+        { field: 'ID' , width: 90},
+        { field: 'Name' , width: 150},
+        { field: 'Side' , width: 120},
+        { field: 'X' , width: 90},
+        { field: 'Y' , width: 90},
+        { field: 'Depth' , width: 90},
         { field: 'Misc' }
     ])
     
     return (
-        <div className="ag-theme-alpine" style={{height: 400, width: 600, marginLeft: 120}}>
+        <div className="ag-theme-alpine" style={{height: 400, maxWidth: 1200, marginLeft: 120}}>
            <AgGridReact
                rowData={rowData()}
                columnDefs={columnDefs}>

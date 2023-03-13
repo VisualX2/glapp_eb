@@ -44,7 +44,7 @@ export class PartStore implements IPartStore{
         
     }
     @action addCutOperation(x:number, y:number, corner:string){
-        const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => true;
+        const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
         var cc_clone = this.operationList.find(element => {
             
             if(isCut(element)){
@@ -66,12 +66,30 @@ export class PartStore implements IPartStore{
         }
         
     }
-    addRadiusOperation(r_tl?:number, r_tr?:number, r_bl?:number, r_br?:number){
-        const d = new op.Radius(r_tl,r_tr,r_bl,r_br)
-        this.operationList.push(d)
+    addRadiusOperation(radius:number, side:string){
+        const isRadius = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Radius => op.type === "radius";
+        var r_clone = this.operationList.find(element => {
+            
+            if(isRadius(element)){
+                if(element.side === side){
+                    return true
+                }
+            }
+            return false
+        })
+        if(r_clone !== undefined){
+            if (isRadius(r_clone)){
+                r_clone.r = radius
+            }
+        }
+        else{
+            const d = new op.Radius(radius,side)
+            this.operationList.push(d)
+        }
+        
     }
     @action addCutFaceOperation(angle:number, side:string){
-        const isCutFace = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.СutFace => true;
+        const isCutFace = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.СutFace => op.type === "cutface";
         var cf_clone = this.operationList.find(element => {
             
             if(isCutFace(element)){

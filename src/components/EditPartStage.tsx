@@ -7,6 +7,7 @@ import * as op from "../logic_stuff/OperationObjects"
 import { DrillOperation } from "./XNCOperationComponents/DrillOperation"
 import { CutOperation } from "./XNCOperationComponents/CutOperation"
 import { CutFaceOperation } from "./XNCOperationComponents/CutFaceOperation"
+import { RadiusOperation } from "./XNCOperationComponents/RadiusOperation"
 
 
 export const EditPartStage = observer(() => {
@@ -70,7 +71,7 @@ export const EditPartStage = observer(() => {
         var drl = []   
         for (const child of selectedPart.getList()) {
             if(isDrill(child) && child.x !== undefined && child.y !== undefined && child.depth !== undefined) {
-                drl.push(<DrillOperation x={child.x} y={child.y} radius={child.radius} partZ={selectedPart.deepness} deep={child.depth}></DrillOperation>);      
+                drl.push(<DrillOperation x={child.x} y={child.y} radius={child.radius} partZ={selectedPart.deepness} deep={child.depth} index={selectedPart.getList().indexOf(child) + 1}></DrillOperation>);      
             }
         }    
         return drl
@@ -96,11 +97,21 @@ export const EditPartStage = observer(() => {
         }    
         return ctf
     }
+    const isRadius = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Radius => op.type === "radius";
+    const radiuses = () => {
+        var rd = []   
+        for (const child of selectedPart.getList()) {
+            if(isRadius(child)) {
+                rd.push(<RadiusOperation radius={child.r} corner={child.side} partwidth={selectedPart.width} partheight={selectedPart.height}></RadiusOperation>);      
+            }
+        }    
+        return rd
+    }
     const xnc = <Layer x={100} y={100} width={1000} height={500}><Rect y = {-selectedPart.deepness - 5} width={selectedPart.width} height={selectedPart.deepness} fill="orange" stroke="black"></Rect>
     <Rect y = {selectedPart.height + 5 } width={selectedPart.width} height={selectedPart.deepness} fill="orange" stroke="black"></Rect>
     <Rect x = {-selectedPart.deepness- 5} width={selectedPart.deepness} height={selectedPart.height} fill="orange" stroke="black"></Rect>
     <Rect x = {selectedPart.width + 5} width={selectedPart.deepness} height={selectedPart.height} fill="orange" stroke="black"></Rect>
-    <Rect width={selectedPart.width} height={selectedPart.height} fill="orange" stroke="black"></Rect>{selvedges()}{drills()}{cuts()}{cutFaces()}</Layer>//32
+    <Rect width={selectedPart.width} height={selectedPart.height} fill="orange" stroke="black"></Rect>{selvedges()}{drills()}{cuts()}{cutFaces()}{radiuses()}</Layer>//32
     return(
         <Stage width={1000} height={500} className="workspace">
             {xnc}
