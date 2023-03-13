@@ -280,7 +280,7 @@ export const OperationMenu = observer(() => {
             <Box sx={style}>
                     <Grid2 container columnSpacing={{ xs: 1, sm: 2, md: 3 }} rowGap={1}>
                         <Grid2 xs={12}>
-                        <ToggleButtonGroup size="small" {...controlCutFace} aria-label="Small sizes">
+                        <ToggleButtonGroup size="small" {...controlRadius} aria-label="Small sizes">
                             <ToggleButton value = "topleft"><Topleft></Topleft></ToggleButton>
                             <ToggleButton value = "topright"><Topright></Topright></ToggleButton>
                             <ToggleButton value = "bottomleft"><Bottomleft></Bottomleft></ToggleButton>
