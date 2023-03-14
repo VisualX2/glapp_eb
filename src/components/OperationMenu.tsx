@@ -10,6 +10,8 @@ import Topleft from "../resources/icons/Topleft"
 import Topright from "../resources/icons/Topright"
 import Bottomleft from "../resources/icons/Bottomleft"
 import Bottomright from "../resources/icons/Bottomright"
+import * as op from "../logic_stuff/OperationObjects"
+
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -33,6 +35,9 @@ export const OperationMenu = observer(() => {
     const [openCutFace, setOpenCutFace] = React.useState(false);
     const [openRadius, setOpenRadius] = React.useState(false);
 
+    
+
+
     const [text_one, setText_one] = React.useState("");
     const [text_two, setText_two] = React.useState("");
     const [text_three, setText_three] = React.useState("");
@@ -41,6 +46,7 @@ export const OperationMenu = observer(() => {
     const [alignment, setAlignment] = React.useState('topleft');
     const [alignmentFace, setAlignmentFace] = React.useState('left');
     const [alignmentRadius, setAlignmentRadius] = React.useState('topleft');
+
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.setSelvedgeModeFalse()
@@ -302,6 +308,11 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                     </Grid2>
                     <Button onClick={() => {
+                        const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
+                        if(selectedPart.getList().some(e => isCut(e) && e.corner === alignmentRadius)){
+                            selectedPart.removeOperation(selectedPart.getList().find(e => isCut(e) && e.corner === alignmentRadius)!.id)
+                        }
+
                         selectedPart.addRadiusOperation(parseFloat(text_one), alignmentRadius)
                         setOpenRadius((previousOpen) => !previousOpen)
                     }}>OK</Button>

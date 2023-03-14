@@ -45,6 +45,3 @@ export const ModalSelectPart = observer(() => {
         </Modal>
     )
 })
-
-
-export {}
