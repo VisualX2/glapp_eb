@@ -87,6 +87,73 @@ export class Radius {
     }
 }
 
+export class Groove {
+    id: string
+    type: string
+    @observable x:number
+    @observable y:number
+    @observable x2:number
+    @observable depth:number
+    @observable y2:number
+    @observable width:number
+
+    constructor(x:number, y:number, x2:number,depth:number,y2:number, width:number){
+        this.id = uuidv4()
+        this.type = "groove"
+        this.x = x
+        this.y = y
+        this.x2 = x2
+        this.depth = depth
+        this.y2 = y2
+        this.width = width
+        makeObservable(this)
+    }
+
+}
+
+export class SideGroove {
+    id: string
+    type: string
+    @observable x:number
+    @observable y:number
+    @observable x2:number
+    @observable y2:number
+    @observable depth:number
+    @observable width:number
+    @observable side:string
+
+    constructor(x:number, y:number, x2:number,y2:number, depth:number, width: number, side:string){
+        this.id = uuidv4()
+        this.type = "sidegroove"
+        this.x = x
+        this.y = y
+        this.x2 = x2
+        this.y2 = y2
+        this.depth = depth
+        this.width = width
+        this.side = side
+        makeObservable(this)
+    }
+}
+
+export class PCut {
+    id: string
+    type: string
+    @observable xgap: number
+    @observable width: number
+    @observable height: number
+    @observable side: string
+
+    constructor(xgap:number, width:number, height: number, side: string){
+        this.id = uuidv4()
+        this.type = "pcut"
+        this.xgap = xgap
+        this.width = width
+        this.height = height
+        this.side =  side
+    }
+}
+
 export class Selvedge{
     @observable left:boolean
     @observable right:boolean

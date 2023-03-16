@@ -5,6 +5,7 @@ import { useStore } from "../stores/StoreContext";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import * as op from "../logic_stuff/OperationObjects"
+import { isCut, isDrill } from "../logic_stuff/CheckOps";
 
 
 export const TableOfOperations = observer(() => {
@@ -17,8 +18,7 @@ export const TableOfOperations = observer(() => {
     
     const rowData = () => {
         var lt = []
-        const isDrill = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Drill => op.type === "drill";
-        const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
+
         for(const operation of selectedPart.getList()){
             if(isDrill(operation)){
                 lt.push({Num: selectedPart.getList().indexOf(operation) + 1, ID: operation.id, Name: "Отвір", X: operation.x, Y: operation.y, Depth: operation.depth, Misc: "Діаметр = " + operation.radius*2})

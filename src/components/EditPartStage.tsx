@@ -8,6 +8,9 @@ import { DrillOperation } from "./XNCOperationComponents/DrillOperation"
 import { CutOperation } from "./XNCOperationComponents/CutOperation"
 import { CutFaceOperation } from "./XNCOperationComponents/CutFaceOperation"
 import { RadiusOperation } from "./XNCOperationComponents/RadiusOperation"
+import { GrooveOperation } from "./XNCOperationComponents/GrooveOperation"
+import { isCut, isCutFace, isDrill, isGroove, isRadius, isSideGroove } from "../logic_stuff/CheckOps"
+import { SideGrooveOperation } from "./XNCOperationComponents/SideGrooveOperation"
 
 
 export const EditPartStage = observer(() => {
@@ -66,7 +69,7 @@ export const EditPartStage = observer(() => {
         }
         return sel
     }
-    const isDrill = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Drill => op.type === "drill";
+    
     const drills = () => {
         var drl = []   
         for (const child of selectedPart.getList()) {
@@ -76,7 +79,6 @@ export const EditPartStage = observer(() => {
         }    
         return drl
     }
-    const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
     const cuts = () => {
         var ct = []   
         for (const child of selectedPart.getList()) {
@@ -87,7 +89,7 @@ export const EditPartStage = observer(() => {
         }    
         return ct
     }
-    const isCutFace = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.СutFace => op.type === "cutface";
+    
     const cutFaces = () => {
         var ctf = []   
         for (const child of selectedPart.getList()) {
@@ -97,7 +99,7 @@ export const EditPartStage = observer(() => {
         }    
         return ctf
     }
-    const isRadius = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Radius => op.type === "radius";
+    
     const radiuses = () => {
         var rd = []   
         for (const child of selectedPart.getList()) {
@@ -107,11 +109,32 @@ export const EditPartStage = observer(() => {
         }    
         return rd
     }
+    
+    const grooves = () => {
+        var gr = []   
+        for (const child of selectedPart.getList()) {
+            if(isGroove(child)) {
+                gr.push(<GrooveOperation x={child.x} y={child.y} x2 = {child.x2} y2 = {child.y2} depth={child.depth} width={child.width}></GrooveOperation>);      
+            }
+        }    
+        return gr
+    }
+
+    const sidegrooves = () => {
+        var sgr = []   
+        for (const child of selectedPart.getList()) {
+            if(isSideGroove(child)) {
+                sgr.push(<SideGrooveOperation x={child.x} y={child.y} x2 = {child.x2} y2 = {child.y2} depth={child.depth} width={child.width} side={child.side} partwidth = {selectedPart.width} partheight={selectedPart.height}></SideGrooveOperation>);      
+            }
+        }    
+        return sgr
+    }
+
     const xnc = <Layer x={100} y={100} width={1000} height={500}><Rect y = {-selectedPart.deepness - 5} width={selectedPart.width} height={selectedPart.deepness} fill="orange" stroke="black"></Rect>
     <Rect y = {selectedPart.height + 5 } width={selectedPart.width} height={selectedPart.deepness} fill="orange" stroke="black"></Rect>
     <Rect x = {-selectedPart.deepness- 5} width={selectedPart.deepness} height={selectedPart.height} fill="orange" stroke="black"></Rect>
     <Rect x = {selectedPart.width + 5} width={selectedPart.deepness} height={selectedPart.height} fill="orange" stroke="black"></Rect>
-    <Rect width={selectedPart.width} height={selectedPart.height} fill="orange" stroke="black"></Rect>{selvedges()}{drills()}{cuts()}{cutFaces()}{radiuses()}</Layer>//32
+    <Rect width={selectedPart.width} height={selectedPart.height} fill="orange" stroke="black"></Rect>{selvedges()}{drills()}{cuts()}{cutFaces()}{radiuses()}{grooves()}{sidegrooves()}</Layer>//32
     return(
         <Stage width={1000} height={500} className="workspace">
             {xnc}

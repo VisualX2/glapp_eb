@@ -1,13 +1,14 @@
 import { action, observable } from "mobx"
 import * as op from "../logic_stuff/OperationObjects"
 import { v4 as uuidv4} from "uuid"
+import { isCut, isCutFace, isRadius } from "../logic_stuff/CheckOps"
 
 export interface IPartStore {
     id: string,
     width: number,
     height: number,
     deepness: number,
-    operationList: Array<op.Cut|op.Drill|op.Radius|op.СutFace>
+    operationList: Array<op.Cut|op.Drill|op.Radius|op.СutFace|op.Groove|op.PCut>
 }
 
 export class PartStore implements IPartStore{
@@ -15,7 +16,7 @@ export class PartStore implements IPartStore{
     @observable width
     @observable height
     @observable deepness
-    @observable operationList: (op.Cut | op.Drill | op.Radius | op.СutFace)[]
+    @observable operationList: (op.Cut | op.Drill | op.Radius | op.СutFace |op.Groove| op.SideGroove|op.PCut)[]
     @observable selvedge:op.Selvedge
 
     constructor(width: number, height:number, deepness: number){
@@ -44,7 +45,6 @@ export class PartStore implements IPartStore{
         
     }
     @action addCutOperation(x:number, y:number, corner:string){
-        const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
         var cc_clone = this.operationList.find(element => {
             
             if(isCut(element)){
@@ -67,7 +67,6 @@ export class PartStore implements IPartStore{
         
     }
     addRadiusOperation(radius:number, side:string){
-        const isRadius = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Radius => op.type === "radius";
         var r_clone = this.operationList.find(element => {
             
             if(isRadius(element)){
@@ -89,7 +88,6 @@ export class PartStore implements IPartStore{
         
     }
     @action addCutFaceOperation(angle:number, side:string){
-        const isCutFace = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.СutFace => op.type === "cutface";
         var cf_clone = this.operationList.find(element => {
             
             if(isCutFace(element)){
@@ -109,7 +107,23 @@ export class PartStore implements IPartStore{
             this.operationList.push(d)
         }
     }
-    removeOperation(id:string){
+
+    @action addGrooveOperation(x: number, y:number, x2: number, depth: number, y2: number, width: number){
+        const d = new op.Groove(x,y,x2,depth,y2,width)
+        this.operationList.push(d)
+    }
+
+    @action addSideGrooveOperation(x: number, y:number, x2: number, y2: number, depth: number, width:number, side:string){
+        const d = new op.SideGroove(x,y,x2,y2,depth,width,side)
+        this.operationList.push(d)
+    }
+
+    @action addPCut(xgap:number, width:number, height: number, side: string){
+        const d = new op.PCut(xgap, width, height, side)
+        this.operationList.push(d)
+    }
+
+    @action removeOperation(id:string){
         const indexOfObject = this.operationList.findIndex(object => {
             return object.id === id;
         });

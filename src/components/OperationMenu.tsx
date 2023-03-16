@@ -1,6 +1,6 @@
 import { observer } from "mobx-react"
 import { useStore } from "../stores/StoreContext"
-import { Box, Button, Drawer, Fade, Modal, Popper, SvgIcon, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
+import { Box, Button, Drawer, Fade, Modal, Popper, SvgIcon, Switch, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
 import { ParameterButton } from "./ParameterButton"
 import "../styles/OperationMenu.css"
 import React from "react"
@@ -11,6 +11,7 @@ import Topright from "../resources/icons/Topright"
 import Bottomleft from "../resources/icons/Bottomleft"
 import Bottomright from "../resources/icons/Bottomright"
 import * as op from "../logic_stuff/OperationObjects"
+import { isCut } from "../logic_stuff/CheckOps"
 
 
 const style = {
@@ -34,27 +35,34 @@ export const OperationMenu = observer(() => {
     const [openCut, setOpenCut] = React.useState(false);
     const [openCutFace, setOpenCutFace] = React.useState(false);
     const [openRadius, setOpenRadius] = React.useState(false);
-
-    
-
+    const [openGroove, setOpenGroove] = React.useState(false);
+    const [openSideGroove, setOpenSideGroove] = React.useState(false);
 
     const [text_one, setText_one] = React.useState("");
     const [text_two, setText_two] = React.useState("");
     const [text_three, setText_three] = React.useState("");
     const [text_four, setText_four] = React.useState("");
+    const [text_five, setText_five] = React.useState("");
+    const [text_six, setText_six] = React.useState("");
 
     const [alignment, setAlignment] = React.useState('topleft');
     const [alignmentFace, setAlignmentFace] = React.useState('left');
     const [alignmentRadius, setAlignmentRadius] = React.useState('topleft');
+    const [alignmentSideGroove, setAlignmentSideGroove] = React.useState('left');
 
-
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        store.utilStore.sevst.setSelvedgeModeFalse()
-        setOpen((previousOpen) => !previousOpen);
+    const clearTb = () => {
         setText_one("")
         setText_two("")
         setText_three("")
         setText_four("")
+        setText_five("")
+        setText_six("")
+    }
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        store.utilStore.sevst.setSelvedgeModeFalse()
+        setOpen((previousOpen) => !previousOpen);
+        clearTb()
     };
     const handleClose = () => {
         setOpen((previousOpen) => !previousOpen);
@@ -63,10 +71,7 @@ export const OperationMenu = observer(() => {
     const handleClickCut = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.setSelvedgeModeFalse()
         setOpenCut((previousOpen) => !previousOpen);
-        setText_one("")
-        setText_two("")
-        setText_three("")
-        setText_four("")
+        clearTb()
     };
     const handleCloseCut = () => {
         setOpenCut((previousOpen) => !previousOpen);
@@ -75,10 +80,7 @@ export const OperationMenu = observer(() => {
     const handleClickCutFace = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.setSelvedgeModeFalse()
         setOpenCutFace((previousOpen) => !previousOpen);
-        setText_one("")
-        setText_two("")
-        setText_three("")
-        setText_four("")
+        clearTb()
     };
     const handleCloseCutFace = () => {
         setOpenCutFace((previousOpen) => !previousOpen);
@@ -87,13 +89,27 @@ export const OperationMenu = observer(() => {
     const handleClickRadius = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.setSelvedgeModeFalse()
         setOpenRadius((previousOpen) => !previousOpen);
-        setText_one("")
-        setText_two("")
-        setText_three("")
-        setText_four("")
+        clearTb()
     };
     const handleCloseRadius = () => {
         setOpenRadius((previousOpen) => !previousOpen);
+    }
+    const handleClickGroove = (event: React.MouseEvent<HTMLElement>) => {
+        store.utilStore.sevst.setSelvedgeModeFalse()
+        setOpenGroove((previousOpen) => !previousOpen);
+        clearTb()
+    };
+    const handleCloseGroove = () => {
+        setOpenGroove((previousOpen) => !previousOpen);
+    }
+
+    const handleClickSideGroove = (event: React.MouseEvent<HTMLElement>) => {
+        store.utilStore.sevst.setSelvedgeModeFalse()
+        setOpenSideGroove((previousOpen) => !previousOpen);
+        clearTb()
+    };
+    const handleCloseSideGroove = () => {
+        setOpenSideGroove((previousOpen) => !previousOpen);
     }
 
     const handleClick2 = (event: React.MouseEvent<HTMLElement>) => {
@@ -118,6 +134,12 @@ export const OperationMenu = observer(() => {
     ) => {
         setAlignmentRadius(newAlignmentRadius);
     };
+    const handleChangeSideGroove = (
+        event: React.MouseEvent<HTMLElement>,
+        newAlignmentSideGroove: string,
+    ) => {
+        setAlignmentSideGroove(newAlignmentSideGroove);
+    };
     const controlCut = {
         value: alignment,
         onChange: handleChangeCut,
@@ -131,6 +153,11 @@ export const OperationMenu = observer(() => {
     const controlRadius = {
         value: alignmentRadius,
         onChange: handleChangeRadius,
+        exclusive: true,
+    };
+    const controlSideGroove = {
+        value: alignmentSideGroove,
+        onChange: handleChangeSideGroove,
         exclusive: true,
     };
 
@@ -308,7 +335,7 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                     </Grid2>
                     <Button onClick={() => {
-                        const isCut = (op: op.Drill|op.Cut|op.Radius|op.СutFace): op is op.Cut => op.type === "cut";
+                        
                         if(selectedPart.getList().some(e => isCut(e) && e.corner === alignmentRadius)){
                             selectedPart.removeOperation(selectedPart.getList().find(e => isCut(e) && e.corner === alignmentRadius)!.id)
                         }
@@ -320,10 +347,256 @@ export const OperationMenu = observer(() => {
             </Modal>
 
             <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Єврозамок</Button>
-            <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз закритий</Button>
-            <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз відкритий</Button>
-            <Button onClick={() => console.log("WIP")} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз в торці</Button>
+            <Button onClick={handleClickGroove} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз закритий</Button>
+            
+            <Modal  open={openGroove} onClose={handleCloseGroove}>
+            <Box sx={style}>
+                    <Grid2 container columnSpacing={{ xs: 1, sm: 2, md: 3 }} rowGap={1}>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                X:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="X"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_one(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Y:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="Y"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_two(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                X2:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="x2"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_three(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Y2:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="y2"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_five(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Глибина:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="depth"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_four(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Ширина:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="width"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_six(event.target.value) }}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Button onClick={() => {
+                        selectedPart.addGrooveOperation(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), parseFloat(text_five) , parseFloat(text_six))
+                        setOpenGroove((previousOpen) => !previousOpen)
+                    }}>OK</Button>
+                </Box>
+            </Modal>
+
+            <Button onClick={handleClickSideGroove} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Паз в торці</Button>
+            
+            <Modal  open={openSideGroove} onClose={handleCloseSideGroove}>
+            <Box sx={style}>
+                    <Grid2 container columnSpacing={{ xs: 1, sm: 2, md: 3 }} rowGap={1}>
+                        <Grid2 xs={12}>
+                            <ToggleButtonGroup size="small" {...controlSideGroove} aria-label="Small sizes">
+                                <ToggleButton value = "left"><Topleft></Topleft></ToggleButton>
+                                <ToggleButton value = "right"><Topright></Topright></ToggleButton>
+                                <ToggleButton value = "top"><Bottomleft></Bottomleft></ToggleButton>
+                                <ToggleButton value = "bottom"><Bottomright></Bottomright></ToggleButton>
+                            </ToggleButtonGroup>
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                X:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="X"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_one(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Y:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="Y"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_two(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                X2:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="x2"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_three(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Y2:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="y2"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_four(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Глибина:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="depth"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_five(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Ширина:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="width"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_six(event.target.value) }}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Button onClick={() => {
+                        selectedPart.addSideGrooveOperation(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), parseFloat(text_five) , parseFloat(text_six), alignmentSideGroove)
+                        setOpenSideGroove((previousOpen) => !previousOpen)
+                    }}>OK</Button>
+                </Box>
+            </Modal>
+            <Button onClick={() => {}} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">P - виріз</Button>
+
+            <Modal  open={openPCut} onClose={handleClosePCut}>
+            <Box sx={style}>
+                    <Grid2 container columnSpacing={{ xs: 1, sm: 2, md: 3 }} rowGap={1}>
+                        <Grid2 xs={12}>
+                            <ToggleButtonGroup size="small" {...controlPCut} aria-label="Small sizes">
+                                <ToggleButton value = "left"><Topleft></Topleft></ToggleButton>
+                                <ToggleButton value = "right"><Topright></Topright></ToggleButton>
+                                <ToggleButton value = "top"><Bottomleft></Bottomleft></ToggleButton>
+                                <ToggleButton value = "bottom"><Bottomright></Bottomright></ToggleButton>
+                            </ToggleButtonGroup>
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                X:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="X"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_one(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Y:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="Y"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_two(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                X2:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="x2"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_three(event.target.value) }}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Button onClick={() => {
+                        selectedPart.addSideGrooveOperation(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), parseFloat(text_five) , parseFloat(text_six), alignmentSideGroove)
+                        setOpenSideGroove((previousOpen) => !previousOpen)
+                    }}>OK</Button>
+                </Box>
+            </Modal>
         </Drawer>
 
     )
+
 })
