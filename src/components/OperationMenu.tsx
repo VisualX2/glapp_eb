@@ -37,6 +37,7 @@ export const OperationMenu = observer(() => {
     const [openRadius, setOpenRadius] = React.useState(false);
     const [openGroove, setOpenGroove] = React.useState(false);
     const [openSideGroove, setOpenSideGroove] = React.useState(false);
+    const [openPCut, setOpenPCut] = React.useState(false);
 
     const [text_one, setText_one] = React.useState("");
     const [text_two, setText_two] = React.useState("");
@@ -49,6 +50,7 @@ export const OperationMenu = observer(() => {
     const [alignmentFace, setAlignmentFace] = React.useState('left');
     const [alignmentRadius, setAlignmentRadius] = React.useState('topleft');
     const [alignmentSideGroove, setAlignmentSideGroove] = React.useState('left');
+    const [alignmentPCut, setAlignmentPCut] = React.useState('left');
 
     const clearTb = () => {
         setText_one("")
@@ -112,6 +114,15 @@ export const OperationMenu = observer(() => {
         setOpenSideGroove((previousOpen) => !previousOpen);
     }
 
+    const handleClickPCut = (event: React.MouseEvent<HTMLElement>) => {
+        store.utilStore.sevst.setSelvedgeModeFalse()
+        setOpenPCut((previousOpen) => !previousOpen);
+        clearTb()
+    };
+    const handleClosePCut = () => {
+        setOpenPCut((previousOpen) => !previousOpen);
+    }
+
     const handleClick2 = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.selvedgeModeSwitch()
     };
@@ -140,6 +151,12 @@ export const OperationMenu = observer(() => {
     ) => {
         setAlignmentSideGroove(newAlignmentSideGroove);
     };
+    const handleChangePCut = (
+        event: React.MouseEvent<HTMLElement>,
+        newAlignmentPCut: string,
+    ) => {
+        setAlignmentPCut(newAlignmentPCut);
+    };
     const controlCut = {
         value: alignment,
         onChange: handleChangeCut,
@@ -158,6 +175,11 @@ export const OperationMenu = observer(() => {
     const controlSideGroove = {
         value: alignmentSideGroove,
         onChange: handleChangeSideGroove,
+        exclusive: true,
+    };
+    const controlPCut = {
+        value: alignmentPCut,
+        onChange: handleChangePCut,
         exclusive: true,
     };
 
@@ -536,7 +558,7 @@ export const OperationMenu = observer(() => {
                     }}>OK</Button>
                 </Box>
             </Modal>
-            <Button onClick={() => {}} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">P - виріз</Button>
+            <Button onClick={handleClickPCut} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">P - виріз</Button>
 
             <Modal  open={openPCut} onClose={handleClosePCut}>
             <Box sx={style}>
@@ -551,12 +573,12 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                         <Grid2 xs={3}>
                             <Typography variant="body1">
-                                X:
+                                Відступ:
                             </Typography>
                         </Grid2>
                         <Grid2 xs={9}>
                             <TextField
-                                id="X"
+                                id="XGap"
                                 type="number"
                                 size="small"
                                 onChange={(event) => { setText_one(event.target.value) }}
@@ -564,12 +586,12 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                         <Grid2 xs={3}>
                             <Typography variant="body1">
-                                Y:
+                                Довжина:
                             </Typography>
                         </Grid2>
                         <Grid2 xs={9}>
                             <TextField
-                                id="Y"
+                                id="Width"
                                 type="number"
                                 size="small"
                                 onChange={(event) => { setText_two(event.target.value) }}
@@ -577,12 +599,12 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                         <Grid2 xs={3}>
                             <Typography variant="body1">
-                                X2:
+                                Ширина:
                             </Typography>
                         </Grid2>
                         <Grid2 xs={9}>
                             <TextField
-                                id="x2"
+                                id="Height"
                                 type="number"
                                 size="small"
                                 onChange={(event) => { setText_three(event.target.value) }}
@@ -590,8 +612,8 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                     </Grid2>
                     <Button onClick={() => {
-                        selectedPart.addSideGrooveOperation(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), parseFloat(text_five) , parseFloat(text_six), alignmentSideGroove)
-                        setOpenSideGroove((previousOpen) => !previousOpen)
+                        selectedPart.addPCut(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), alignmentPCut)
+                        setOpenPCut((previousOpen) => !previousOpen)
                     }}>OK</Button>
                 </Box>
             </Modal>
