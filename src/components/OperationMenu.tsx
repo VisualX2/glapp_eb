@@ -11,7 +11,7 @@ import Topright from "../resources/icons/Topright"
 import Bottomleft from "../resources/icons/Bottomleft"
 import Bottomright from "../resources/icons/Bottomright"
 import * as op from "../logic_stuff/OperationObjects"
-import { isCut } from "../logic_stuff/CheckOps"
+import { isCornerCut, isCut, isRadius } from "../logic_stuff/CheckOps"
 
 
 const style = {
@@ -38,6 +38,7 @@ export const OperationMenu = observer(() => {
     const [openGroove, setOpenGroove] = React.useState(false);
     const [openSideGroove, setOpenSideGroove] = React.useState(false);
     const [openPCut, setOpenPCut] = React.useState(false);
+    const [openCornerCut, setOpenCornerCut] = React.useState(false);
 
     const [text_one, setText_one] = React.useState("");
     const [text_two, setText_two] = React.useState("");
@@ -51,6 +52,7 @@ export const OperationMenu = observer(() => {
     const [alignmentRadius, setAlignmentRadius] = React.useState('topleft');
     const [alignmentSideGroove, setAlignmentSideGroove] = React.useState('left');
     const [alignmentPCut, setAlignmentPCut] = React.useState('left');
+    const [alignmentCornerCut, setAlignmentCornerCut] = React.useState('topleft');
 
     const clearTb = () => {
         setText_one("")
@@ -123,6 +125,15 @@ export const OperationMenu = observer(() => {
         setOpenPCut((previousOpen) => !previousOpen);
     }
 
+    const handleClickCornerCut = (event: React.MouseEvent<HTMLElement>) => {
+        store.utilStore.sevst.setSelvedgeModeFalse()
+        setOpenCornerCut((previousOpen) => !previousOpen);
+        clearTb()
+    };
+    const handleCloseCornerCut = () => {
+        setOpenCornerCut((previousOpen) => !previousOpen);
+    }
+
     const handleClick2 = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.selvedgeModeSwitch()
     };
@@ -157,6 +168,13 @@ export const OperationMenu = observer(() => {
     ) => {
         setAlignmentPCut(newAlignmentPCut);
     };
+    const handleChangeCornerCut = (
+        event: React.MouseEvent<HTMLElement>,
+        newAlignmentCornerCut: string,
+    ) => {
+        setAlignmentCornerCut(newAlignmentCornerCut);
+    };
+
     const controlCut = {
         value: alignment,
         onChange: handleChangeCut,
@@ -180,6 +198,11 @@ export const OperationMenu = observer(() => {
     const controlPCut = {
         value: alignmentPCut,
         onChange: handleChangePCut,
+        exclusive: true,
+    };
+    const controlCornerCut = {
+        value: alignmentCornerCut,
+        onChange: handleChangeCornerCut,
         exclusive: true,
     };
 
@@ -358,8 +381,8 @@ export const OperationMenu = observer(() => {
                     </Grid2>
                     <Button onClick={() => {
                         
-                        if(selectedPart.getList().some(e => isCut(e) && e.corner === alignmentRadius)){
-                            selectedPart.removeOperation(selectedPart.getList().find(e => isCut(e) && e.corner === alignmentRadius)!.id)
+                        if(selectedPart.getList().some((e => isCut(e) && e.corner === alignmentRadius) || (e => isCornerCut(e) && e.corner === alignmentRadius))){
+                            selectedPart.removeOperation(selectedPart.getList().find((e => isCut(e) && e.corner === alignmentRadius) || (e => isCornerCut(e) && e.corner === alignmentRadius))!.id)
                         }
 
                         selectedPart.addRadiusOperation(parseFloat(text_one), alignmentRadius)
@@ -614,6 +637,56 @@ export const OperationMenu = observer(() => {
                     <Button onClick={() => {
                         selectedPart.addPCut(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), alignmentPCut)
                         setOpenPCut((previousOpen) => !previousOpen)
+                    }}>OK</Button>
+                </Box>
+            </Modal>
+            <Button onClick={handleClickCornerCut} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Кутовий виріз</Button>
+
+            <Modal  open={openCornerCut} onClose={handleCloseCornerCut}>
+            <Box sx={style}>
+                    <Grid2 container columnSpacing={{ xs: 1, sm: 2, md: 3 }} rowGap={1}>
+                        <Grid2 xs={12}>
+                            <ToggleButtonGroup size="small" {...controlCornerCut} aria-label="Small sizes">
+                                <ToggleButton value = "topleft"><Topleft></Topleft></ToggleButton>
+                                <ToggleButton value = "topright"><Topright></Topright></ToggleButton>
+                                <ToggleButton value = "bottomleft"><Bottomleft></Bottomleft></ToggleButton>
+                                <ToggleButton value = "bottomright"><Bottomright></Bottomright></ToggleButton>
+                            </ToggleButtonGroup>
+                        </Grid2>
+                        
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Довжина:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="Width"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_one(event.target.value) }}
+                            />
+                        </Grid2>
+                        <Grid2 xs={3}>
+                            <Typography variant="body1">
+                                Ширина:
+                            </Typography>
+                        </Grid2>
+                        <Grid2 xs={9}>
+                            <TextField
+                                id="Height"
+                                type="number"
+                                size="small"
+                                onChange={(event) => { setText_two(event.target.value) }}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Button onClick={() => {
+                        if(selectedPart.getList().some((e => isCut(e) && e.corner === alignmentCornerCut) || (e => isRadius(e) && e.side === alignmentCornerCut))){
+                            selectedPart.removeOperation(selectedPart.getList().find((e => isCut(e) && e.corner === alignmentCornerCut) || (e => isRadius(e) && e.side === alignmentCornerCut))!.id)
+                        }
+                        selectedPart.addCornerCut(parseFloat(text_one), parseFloat(text_two), alignmentCornerCut)
+                        setOpenCornerCut((previousOpen) => !previousOpen)
                     }}>OK</Button>
                 </Box>
             </Modal>

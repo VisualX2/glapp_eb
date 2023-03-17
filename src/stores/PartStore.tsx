@@ -8,7 +8,7 @@ export interface IPartStore {
     width: number,
     height: number,
     deepness: number,
-    operationList: Array<op.Cut|op.Drill|op.Radius|op.СutFace|op.Groove|op.PCut>
+    operationList: Array<op.Cut|op.Drill|op.Radius|op.СutFace|op.Groove| op.SideGroove|op.PCut|op.CornerCut>
 }
 
 export class PartStore implements IPartStore{
@@ -16,7 +16,7 @@ export class PartStore implements IPartStore{
     @observable width
     @observable height
     @observable deepness
-    @observable operationList: (op.Cut | op.Drill | op.Radius | op.СutFace |op.Groove| op.SideGroove|op.PCut)[]
+    @observable operationList: (op.Cut | op.Drill | op.Radius | op.СutFace |op.Groove| op.SideGroove|op.PCut|op.CornerCut)[]
     @observable selvedge:op.Selvedge
 
     constructor(width: number, height:number, deepness: number){
@@ -120,6 +120,11 @@ export class PartStore implements IPartStore{
 
     @action addPCut(xgap:number, width:number, height: number, side: string){
         const d = new op.PCut(xgap, width, height, side)
+        this.operationList.push(d)
+    }
+
+    @action addCornerCut(width:number, height: number, corner: string) {
+        const d = new op.CornerCut(width,height,corner)
         this.operationList.push(d)
     }
 
