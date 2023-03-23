@@ -20,8 +20,8 @@ class Operation {
 export class Drill{
     id:string
     type: string
-    @observable x?:number
-    @observable y?:number
+    @observable x:number
+    @observable y:number
     @observable depth?:number
     @observable radius:number
     @observable side:string

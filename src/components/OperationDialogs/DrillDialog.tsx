@@ -101,7 +101,7 @@ export const DrillDialog: React.FC<DrillDialogParameters> = observer(({selectedP
                             </Grid2>
                         </Grid2>
                         <Button onClick={() => {
-                            let r = drillPrep(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), "front", selectedPart.width, selectedPart.height)
+                            let r = drillPrep(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), "front", selectedPart)
                             if(r === "success"){
                                 selectedPart.addDrillOperation(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), "front")
                                 handleClickDrill()
