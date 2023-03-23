@@ -1,4 +1,4 @@
-import { Provider, observer } from "mobx-react"
+import { observer } from "mobx-react"
 import { useStore } from "../stores/StoreContext"
 import { Circle, Layer, Rect, Stage } from "react-konva"
 import { PartStore } from "../stores/PartStore"

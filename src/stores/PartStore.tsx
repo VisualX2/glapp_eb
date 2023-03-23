@@ -40,6 +40,8 @@ export class PartStore implements IPartStore{
         return this.operationList
     }
     @action addDrillOperation(x:number, y:number, depth:number, radius:number, side:string){
+
+        
         const d = new op.Drill(x,y,depth,radius,side)
         this.operationList.push(d)
         

@@ -12,6 +12,7 @@ import Bottomleft from "../resources/icons/Bottomleft"
 import Bottomright from "../resources/icons/Bottomright"
 import * as op from "../logic_stuff/OperationObjects"
 import { isCornerCut, isCut, isRadius } from "../logic_stuff/CheckOps"
+import { DrillDialog } from "./OperationDialogs/DrillDialog"
 
 
 const style = {
@@ -31,7 +32,6 @@ const style = {
 export const OperationMenu = observer(() => {
     const store = useStore()
     var selectedPart = store.parts.find(i => i.getPartId() === store.utilStore.getSelectedPart())!
-    const [open, setOpen] = React.useState(false);
     const [openCut, setOpenCut] = React.useState(false);
     const [openCutFace, setOpenCutFace] = React.useState(false);
     const [openRadius, setOpenRadius] = React.useState(false);
@@ -63,14 +63,7 @@ export const OperationMenu = observer(() => {
         setText_six("")
     }
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        store.utilStore.sevst.setSelvedgeModeFalse()
-        setOpen((previousOpen) => !previousOpen);
-        clearTb()
-    };
-    const handleClose = () => {
-        setOpen((previousOpen) => !previousOpen);
-    }
+    
 
     const handleClickCut = (event: React.MouseEvent<HTMLElement>) => {
         store.utilStore.sevst.setSelvedgeModeFalse()
@@ -209,69 +202,8 @@ export const OperationMenu = observer(() => {
     return (
         <Drawer className="opMenuStyle" variant="persistent" anchor="left" open={store.utilStore.operationmenudrawerstate}>
             <Button onClick={handleClick2} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Крайкування</Button>
-            <Button onClick={handleClick} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Свердління</Button>
-            <Modal open={open} onClose={handleClose}>
-                <Box sx={style}>
-                    <Grid2 container columnSpacing={{ xs: 1, sm: 2, md: 3 }}  rowGap={1}>
-                        <Grid2 xs={3}>
-                            <Typography variant="body1">
-                                X:
-                            </Typography>
-                        </Grid2>
-                        <Grid2 xs={9}>
-                            <TextField
-                                id="drillx"
-                                type="number"
-                                size="small"
-                                onChange={(event) => { setText_one(event.target.value) }}
-                            />
-                        </Grid2>
-                        <Grid2 xs={3}>
-                            <Typography variant="body1">
-                                Y:
-                            </Typography>
-                        </Grid2>
-                        <Grid2 xs={9}>
-                            <TextField
-                                id="drilly"
-                                type="number"
-                                size="small"
-                                onChange={(event) => { setText_two(event.target.value) }}
-                            />
-                        </Grid2>
-                        <Grid2 xs={3}>
-                            <Typography variant="body1">
-                                Глибина:
-                            </Typography>
-                        </Grid2>
-                        <Grid2 xs={9}>
-                            <TextField
-                                id="drillz"
-                                type="number"
-                                size="small"
-                                onChange={(event) => { setText_three(event.target.value) }}
-                            />
-                        </Grid2>
-                        <Grid2 xs={3} alignItems="center">
-                            <Typography variant="body1">
-                                Радіус:
-                            </Typography>
-                        </Grid2>
-                        <Grid2 xs={9}>
-                            <TextField
-                                id="drillrad"
-                                type="number"
-                                size="small"
-                                onChange={(event) => { setText_four(event.target.value) }}
-                            />
-                        </Grid2>
-                    </Grid2>
-                    <Button onClick={() => {
-                        selectedPart.addDrillOperation(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), "front")
-                        setOpen((previousOpen) => !previousOpen)
-                    }}>OK</Button>
-                </Box>
-            </Modal>
+            <DrillDialog selectedPart={selectedPart}></DrillDialog>
+            
             <Button onClick={handleClickCut} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Зріз по площині</Button>
             <Modal  open={openCut} onClose={handleCloseCut}>
             <Box sx={style}>
