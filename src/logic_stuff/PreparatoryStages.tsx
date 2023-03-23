@@ -15,6 +15,10 @@ export const drillPrep = (x: number, y: number, depth: number, radius: number, s
     if(x - radius < minX || x + radius > maxX || y - radius < minY || y + radius > maxY){
         return "Свердління проводиться за межами деталі"
     }
+
+    if(x - radius < minX + 5 || x + radius > maxX - 5 || y - radius < minY + 5 || y + radius > maxY - 5){
+        return "Свердління має проводитися не більше ніж за 5 мм від краю деталі"
+    }
     
     return "success"
 };
