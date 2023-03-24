@@ -22,6 +22,14 @@ export const drillPrep = (x: number, y: number, depth: number, radius: number, s
     if(x - radius < minX + 5 || x + radius > maxX - 5 || y - radius < minY + 5 || y + radius > maxY - 5){
         return "Свердління має проводитися не менше ніж за 5 мм від краю деталі"
     }
+
+    if(depth <= 0 || isNaN(depth)){
+        return "Глибина свердління не може бути менша за 0"
+    }
+
+    if(depth > selectedPart.deepness){
+        return "Глибина свердління не може бути більша за товщину деталі"
+    }
     
     for(const child of selectedPart.getList()){
         console.log(selectedPart.getList())
@@ -33,6 +41,7 @@ export const drillPrep = (x: number, y: number, depth: number, radius: number, s
             }
         }
     }
+
     return "success"
 };
 

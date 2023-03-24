@@ -1,10 +1,11 @@
 import { observer } from "mobx-react"
 import React from "react";
 import { PartStore } from "../../stores/PartStore";
-import { Alert, Box, Button, Modal, Portal, Snackbar, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, MenuItem, Modal, Portal, Select, Snackbar, TextField, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import "../../styles/OperationMenu.css"
 import { drillPrep } from "../../logic_stuff/PreparatoryStages";
+import tools from "../../config/tools.json"
 
 type DrillDialogParameters = {
     selectedPart: PartStore;
@@ -22,6 +23,11 @@ const style = {
     p: 4,
 };
 
+interface Tool {
+    diameter: number;
+    maxdepth: number;
+}
+
 export const DrillDialog: React.FC<DrillDialogParameters> = observer(({selectedPart}) => {
 
     const [open, setOpen] = React.useState(false);
@@ -34,8 +40,16 @@ export const DrillDialog: React.FC<DrillDialogParameters> = observer(({selectedP
     const [text_three, setText_three] = React.useState("");
     const [text_four, setText_four] = React.useState("");
     
+    const clearTb = () => {
+        setText_one("")
+        setText_two("")
+        setText_three("")
+        setText_four("")
+    }
+
     const handleClickDrill = () => {
         setOpen((previousOpen) => !previousOpen);
+        clearTb()
     };
     const handleCloseError = () => {
         setOpenError((previousOpen) => !previousOpen);
@@ -88,16 +102,17 @@ export const DrillDialog: React.FC<DrillDialogParameters> = observer(({selectedP
                             </Grid2>
                             <Grid2 xs={3} alignItems="center">
                                 <Typography variant="body1">
-                                    Радіус:
+                                    Інструмент:
                                 </Typography>
                             </Grid2>
                             <Grid2 xs={9}>
-                                <TextField
-                                    id="drillrad"
-                                    type="number"
-                                    size="small"
-                                    onChange={(event) => { setText_four(event.target.value) }}
-                                />
+                                <Select label="Question">
+                                    {tools.tools.map((tool) => (
+                                        <MenuItem value={[tool.diameter.toString(), tool.maxdepth.toString()]}>
+                                            Діаметр: {tool.diameter} Макс. Глибина: {tool.maxdepth === 9999 ? "Наскрізна" : tool.maxdepth}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
                             </Grid2>
                         </Grid2>
                         <Button onClick={() => {

@@ -1,0 +1,59 @@
+{
+    "tools": [
+        {
+            "diameter":2,
+            "maxdepth":3,
+            "type": "front"
+        },
+        {
+            "diameter":8,
+            "maxdepth":35,
+            "type": "front"
+        },
+        {
+            "diameter":5,
+            "maxdepth":35,
+            "type": "front"
+        },
+        {
+            "diameter":7,
+            "maxdepth":9999,
+            "type": "front"
+        },
+        {
+            "diameter":8,
+            "maxdepth":9999,
+            "type": "front"
+        },
+        {
+            "diameter":5,
+            "maxdepth":9999,
+            "type": "front"
+        },
+        {
+            "diameter":10,
+            "maxdepth":35,
+            "type": "front"
+        },
+        {
+            "diameter":15,
+            "maxdepth":35,
+            "type": "front"
+        },
+        {
+            "diameter":35,
+            "maxdepth":35,
+            "type": "front"
+        },
+        {
+            "diameter":4.5,
+            "maxdepth":35,
+            "type": "side"
+        },
+        {
+            "diameter":8,
+            "maxdepth":35,
+            "type": "side"
+        }
+    ]
+}
