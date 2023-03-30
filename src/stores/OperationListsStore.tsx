@@ -6,6 +6,7 @@ export class OperationListsStore {
 
     constructor(){
         this.drills = []
+        makeObservable(this)
     }
 
     @action getDrills() {
