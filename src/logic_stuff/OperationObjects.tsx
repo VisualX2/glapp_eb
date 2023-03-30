@@ -22,7 +22,7 @@ export class Drill{
     type: string
     @observable x:number
     @observable y:number
-    @observable depth?:number
+    @observable depth:number
     @observable radius:number
     @observable side:string
     

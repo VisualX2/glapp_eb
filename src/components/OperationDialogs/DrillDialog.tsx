@@ -6,6 +6,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import "../../styles/OperationMenu.css"
 import { drillPrep } from "../../logic_stuff/PreparatoryStages";
 import tools from "../../config/tools.json"
+import { addDrill } from "../../logic_stuff/AddOperationFunctions";
 
 type DrillDialogParameters = {
     selectedPart: PartStore;
@@ -100,6 +101,19 @@ export const DrillDialog: React.FC<DrillDialogParameters> = observer(({selectedP
                                     onChange={(event) => { setText_three(event.target.value) }}
                                 />
                             </Grid2>
+                            <Grid2 xs={3}>
+                                <Typography variant="body1">
+                                    Рад:
+                                </Typography>
+                            </Grid2>
+                            <Grid2 xs={9}>
+                                <TextField
+                                    id="drilld"
+                                    type="number"
+                                    size="small"
+                                    onChange={(event) => { setText_four(event.target.value) }}
+                                />
+                            </Grid2>
                             <Grid2 xs={3} alignItems="center">
                                 <Typography variant="body1">
                                     Інструмент:
@@ -118,7 +132,7 @@ export const DrillDialog: React.FC<DrillDialogParameters> = observer(({selectedP
                         <Button onClick={() => {
                             let r = drillPrep(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), "front", selectedPart)
                             if(r === "success"){
-                                selectedPart.addDrillOperation(parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), "front")
+                                addDrill(selectedPart,parseFloat(text_one), parseFloat(text_two), parseFloat(text_three), parseFloat(text_four), "front")
                                 handleClickDrill()
                             }
                             else {

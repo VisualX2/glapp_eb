@@ -74,10 +74,8 @@ export const EditPartStage = observer(() => {
     
     const drills = () => {
         var drl = []   
-        for (const child of selectedPart.getList()) {
-            if(isDrill(child) && child.x !== undefined && child.y !== undefined && child.depth !== undefined) {
-                drl.push(<DrillOperation x={child.x} y={child.y} radius={child.radius} partZ={selectedPart.deepness} deep={child.depth} index={selectedPart.getList().indexOf(child) + 1}></DrillOperation>);      
-            }
+        for (const child of selectedPart.opStore.getDrills()) {
+            drl.push(<DrillOperation x={child.x} y={child.y} radius={child.radius} partZ={selectedPart.deepness} deep={child.depth} index={selectedPart.opStore.getDrills().indexOf(child) + 1}></DrillOperation>);      
         }    
         return drl
     }

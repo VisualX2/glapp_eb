@@ -18,7 +18,9 @@ export const TableOfOperations = observer(() => {
     
     const rowData = () => {
         var lt = []
-
+        for(const operation of selectedPart.opStore.getDrills()){
+            lt.push({Num: selectedPart.opStore.getDrills().indexOf(operation) + 1, ID: operation.id, Name: "Отвір", X: operation.x, Y: operation.y, Depth: operation.depth, Misc: "Діаметр = " + operation.radius*2})
+        }
         for(const operation of selectedPart.getList()){
             if(isDrill(operation)){
                 lt.push({Num: selectedPart.getList().indexOf(operation) + 1, ID: operation.id, Name: "Отвір", X: operation.x, Y: operation.y, Depth: operation.depth, Misc: "Діаметр = " + operation.radius*2})

@@ -2,13 +2,15 @@ import { action, observable } from "mobx"
 import * as op from "../logic_stuff/OperationObjects"
 import { v4 as uuidv4} from "uuid"
 import { isCut, isCutFace, isRadius } from "../logic_stuff/CheckOps"
+import { OperationListsStore } from "./OperationListsStore"
 
 export interface IPartStore {
     id: string,
     width: number,
     height: number,
     deepness: number,
-    operationList: Array<op.Cut|op.Drill|op.Radius|op.СutFace|op.Groove| op.SideGroove|op.PCut|op.CornerCut>
+    operationList: Array<op.Cut|op.Drill|op.Radius|op.СutFace|op.Groove| op.SideGroove|op.PCut|op.CornerCut>,
+    opStore: OperationListsStore
 }
 
 export class PartStore implements IPartStore{
@@ -18,12 +20,14 @@ export class PartStore implements IPartStore{
     @observable deepness
     @observable operationList: (op.Cut | op.Drill | op.Radius | op.СutFace |op.Groove| op.SideGroove|op.PCut|op.CornerCut)[]
     @observable selvedge:op.Selvedge
+    @observable opStore: OperationListsStore
 
     constructor(width: number, height:number, deepness: number){
         this.width = width
         this.height = height
         this.deepness = deepness
         this.operationList = observable([])
+        this.opStore = new OperationListsStore()
         this.id = uuidv4()
         this.selvedge = new op.Selvedge()
     }

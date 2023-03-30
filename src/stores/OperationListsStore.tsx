@@ -1,11 +1,14 @@
 import { action, makeObservable, observable } from "mobx";
 import * as op from "../logic_stuff/OperationObjects"
+import { CornersStore } from "./CornersStore";
 
 export class OperationListsStore {
     @observable private drills: (op.Drill)[]
+    @observable corners: CornersStore
 
     constructor(){
         this.drills = []
+        this.corners = new CornersStore()
         makeObservable(this)
     }
 
@@ -13,8 +16,7 @@ export class OperationListsStore {
         return this.drills
     }
 
-    @action addDrill(x:number, y:number, depth:number, radius:number, side:string){
-        const d = new op.Drill(x,y,depth,radius,side)
+    @action addDrill(d:op.Drill){
         this.drills.push(d)
     }
 
