@@ -43,56 +43,7 @@ export class PartStore implements IPartStore{
     @action getList(){
         return this.operationList
     }
-    @action addDrillOperation(x:number, y:number, depth:number, radius:number, side:string){
 
-        
-        const d = new op.Drill(x,y,depth,radius,side)
-        this.operationList.push(d)
-        
-    }
-    @action addCutOperation(x:number, y:number, corner:string){
-        var cc_clone = this.operationList.find(element => {
-            
-            if(isCut(element)){
-                if(element.corner === corner){
-                    return true
-                }
-            }
-            return false
-        })
-        if(cc_clone !== undefined){
-            if (isCut(cc_clone)){
-                cc_clone.x = x
-                cc_clone.y = y
-            }
-        }
-        else{
-            const d = new op.Cut(x,y,corner)
-            this.operationList.push(d)
-        }
-        
-    }
-    addRadiusOperation(radius:number, side:string){
-        var r_clone = this.operationList.find(element => {
-            
-            if(isRadius(element)){
-                if(element.side === side){
-                    return true
-                }
-            }
-            return false
-        })
-        if(r_clone !== undefined){
-            if (isRadius(r_clone)){
-                r_clone.r = radius
-            }
-        }
-        else{
-            const d = new op.Radius(radius,side)
-            this.operationList.push(d)
-        }
-        
-    }
     @action addCutFaceOperation(angle:number, side:string){
         var cf_clone = this.operationList.find(element => {
             
@@ -126,11 +77,6 @@ export class PartStore implements IPartStore{
 
     @action addPCut(xgap:number, width:number, height: number, side: string){
         const d = new op.PCut(xgap, width, height, side)
-        this.operationList.push(d)
-    }
-
-    @action addCornerCut(width:number, height: number, corner: string) {
-        const d = new op.CornerCut(width,height,corner)
         this.operationList.push(d)
     }
 

@@ -13,6 +13,7 @@ import Bottomright from "../resources/icons/Bottomright"
 import * as op from "../logic_stuff/OperationObjects"
 import { isCornerCut, isCut, isRadius } from "../logic_stuff/CheckOps"
 import { DrillDialog } from "./OperationDialogs/DrillDialog"
+import { addCornerCut, addCut, addRadius } from "../logic_stuff/AddOperationFunctions"
 
 
 const style = {
@@ -244,7 +245,7 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                     </Grid2>
                     <Button onClick={() => {
-                        selectedPart.addCutOperation(parseFloat(text_one), parseFloat(text_two), alignment)
+                        addCut(selectedPart,parseFloat(text_one), parseFloat(text_two), alignment)
                         setOpenCut((previousOpen) => !previousOpen)
                     }}>OK</Button>
                 </Box>
@@ -312,12 +313,7 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                     </Grid2>
                     <Button onClick={() => {
-                        
-                        if(selectedPart.getList().some((e => isCut(e) && e.corner === alignmentRadius) || (e => isCornerCut(e) && e.corner === alignmentRadius))){
-                            selectedPart.removeOperation(selectedPart.getList().find((e => isCut(e) && e.corner === alignmentRadius) || (e => isCornerCut(e) && e.corner === alignmentRadius))!.id)
-                        }
-
-                        selectedPart.addRadiusOperation(parseFloat(text_one), alignmentRadius)
+                        addRadius(selectedPart,parseFloat(text_one), alignmentRadius)
                         setOpenRadius((previousOpen) => !previousOpen)
                     }}>OK</Button>
                 </Box>
@@ -614,10 +610,7 @@ export const OperationMenu = observer(() => {
                         </Grid2>
                     </Grid2>
                     <Button onClick={() => {
-                        if(selectedPart.getList().some((e => isCut(e) && e.corner === alignmentCornerCut) || (e => isRadius(e) && e.side === alignmentCornerCut))){
-                            selectedPart.removeOperation(selectedPart.getList().find((e => isCut(e) && e.corner === alignmentCornerCut) || (e => isRadius(e) && e.side === alignmentCornerCut))!.id)
-                        }
-                        selectedPart.addCornerCut(parseFloat(text_one), parseFloat(text_two), alignmentCornerCut)
+                        addCornerCut(selectedPart,parseFloat(text_one), parseFloat(text_two), alignmentCornerCut)
                         setOpenCornerCut((previousOpen) => !previousOpen)
                     }}>OK</Button>
                 </Box>

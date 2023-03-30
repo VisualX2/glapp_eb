@@ -14,16 +14,16 @@ export const CornerCutOperation: React.FC<CornerCutParameters> = observer(({widt
 
     const bC = () => {
             if(corner === "topleft") {
-                return <Group><Rect x={0} y = {0} width={width} height={height} fill="red" opacity={0.6}></Rect><Rect x={0} y = {0} width={width} height={height} stroke="red" ></Rect></Group>
+                return <Group><Rect x={0} y = {0} width={width} height={height} fill="red" opacity={0.4}></Rect><Rect x={0} y = {0} width={width} height={height} stroke="red" ></Rect></Group>
             }
             else if(corner === "topright") {
-                return <Group><Rect x={partwidth - width} y = {0} width={width} height={height} fill="red" opacity={0.6}></Rect><Rect x={partwidth - width} y = {0} width={width} height={height} stroke="red" ></Rect></Group>
+                return <Group><Rect x={partwidth - width} y = {0} width={width} height={height} fill="red" opacity={0.4}></Rect><Rect x={partwidth - width} y = {0} width={width} height={height} stroke="red" ></Rect></Group>
             }
             else if(corner === "bottomleft") {
-                return <Group><Rect x={0} y = {partheight - height} width={width} height={height} fill="red" opacity={0.6}></Rect><Rect x={0} y = {partheight - height} width={width} height={height} stroke="red" ></Rect></Group>
+                return <Group><Rect x={0} y = {partheight - height} width={width} height={height} fill="red" opacity={0.4}></Rect><Rect x={0} y = {partheight - height} width={width} height={height} stroke="red" ></Rect></Group>
             }
             else {
-                return <Group><Rect x={partwidth - width} y = {partheight - height} width={width} height={height} fill="red" opacity={0.6}></Rect><Rect x={partwidth - width} y = {partheight - height} width={width} height={height} stroke="red" ></Rect></Group>
+                return <Group><Rect x={partwidth - width} y = {partheight - height} width={width} height={height} fill="red" opacity={0.4}></Rect><Rect x={partwidth - width} y = {partheight - height} width={width} height={height} stroke="red" ></Rect></Group>
             }
     }
 

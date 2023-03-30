@@ -9,7 +9,7 @@ import { CutOperation } from "./XNCOperationComponents/CutOperation"
 import { CutFaceOperation } from "./XNCOperationComponents/CutFaceOperation"
 import { RadiusOperation } from "./XNCOperationComponents/RadiusOperation"
 import { GrooveOperation } from "./XNCOperationComponents/GrooveOperation"
-import { isCornerCut, isCut, isCutFace, isDrill, isGroove, isPCut, isRadius, isSideGroove } from "../logic_stuff/CheckOps"
+import { isCornerCut, isCornerCutOp, isCut, isCutFace, isCutOp, isDrill, isGroove, isPCut, isRadius, isRadiusOp, isSideGroove } from "../logic_stuff/CheckOps"
 import { SideGrooveOperation } from "./XNCOperationComponents/SideGrooveOperation"
 import { PCutOperation } from "./XNCOperationComponents/PCutOperation"
 import { CornerCutOperation } from "./XNCOperationComponents/CornerCutOperation"
@@ -79,14 +79,19 @@ export const EditPartStage = observer(() => {
         }    
         return drl
     }
-    const cuts = () => {
-        var ct = []   
-        for (const child of selectedPart.getList()) {
-            if(isCut(child) && child.x !== undefined && child.y !== undefined) {
-                ct.push(<CutOperation x={child.x} y={child.y} corner={child.corner} partwidth={selectedPart.width} partheight={selectedPart.height}></CutOperation>);      
-                console.log("ty lokh")
+
+    const corners = () => {
+        var ct = []
+        for(const child of selectedPart.opStore.corners.getListCorners()){
+            if(isCutOp(child)){
+                ct.push(<CutOperation x={child.x} y={child.y} corner={child.corner} partwidth={selectedPart.width} partheight={selectedPart.height}></CutOperation>);
+            } else if(isRadiusOp(child)) {
+                ct.push(<RadiusOperation radius={child.r} corner={child.side} partwidth={selectedPart.width} partheight={selectedPart.height}></RadiusOperation>);      
+            } else if(isCornerCutOp(child)) {
+                ct.push(<CornerCutOperation width={child.width} height={child.height} corner={child.corner} partwidth = {selectedPart.width} partheight = {selectedPart.height}></CornerCutOperation>);      
             }
-        }    
+
+        }
         return ct
     }
     
@@ -100,15 +105,6 @@ export const EditPartStage = observer(() => {
         return ctf
     }
     
-    const radiuses = () => {
-        var rd = []   
-        for (const child of selectedPart.getList()) {
-            if(isRadius(child)) {
-                rd.push(<RadiusOperation radius={child.r} corner={child.side} partwidth={selectedPart.width} partheight={selectedPart.height}></RadiusOperation>);      
-            }
-        }    
-        return rd
-    }
     
     const grooves = () => {
         var gr = []   
@@ -140,21 +136,12 @@ export const EditPartStage = observer(() => {
         return pct
     }
 
-    const cornercuts = () => {
-        var cct = []   
-        for (const child of selectedPart.getList()) {
-            if(isCornerCut(child)) {
-                cct.push(<CornerCutOperation width={child.width} height={child.height} corner={child.corner} partwidth = {selectedPart.width} partheight = {selectedPart.height}></CornerCutOperation>);      
-            }
-        }    
-        return cct
-    }
 
     const xnc = <Layer x={100} y={100} width={1000} height={500}><Rect y = {-selectedPart.deepness - 5} width={selectedPart.width} height={selectedPart.deepness} fill="orange" stroke="black"></Rect>
     <Rect y = {selectedPart.height + 5 } width={selectedPart.width} height={selectedPart.deepness} fill="orange" stroke="black"></Rect>
     <Rect x = {-selectedPart.deepness- 5} width={selectedPart.deepness} height={selectedPart.height} fill="orange" stroke="black"></Rect>
     <Rect x = {selectedPart.width + 5} width={selectedPart.deepness} height={selectedPart.height} fill="orange" stroke="black"></Rect>
-    <Rect width={selectedPart.width} height={selectedPart.height} fill="orange" stroke="black"></Rect>{selvedges()}{drills()}{cuts()}{cutFaces()}{radiuses()}{grooves()}{sidegrooves()}{pcuts()}{cornercuts()}</Layer>//32
+    <Rect width={selectedPart.width} height={selectedPart.height} fill="orange" stroke="black"></Rect>{selvedges()}{drills()}{corners()}{cutFaces()}{grooves()}{sidegrooves()}{pcuts()}</Layer>//32
     return(
         <Stage width={1000} height={500} className="workspace">
             {xnc}
