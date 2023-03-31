@@ -31,14 +31,11 @@ export const drillPrep = (x: number, y: number, depth: number, radius: number, s
         return "Глибина свердління не може бути більша за товщину деталі"
     }
     
-    for(const child of selectedPart.getList()){
-        console.log(selectedPart.getList())
-        if(isDrill(child)){
-            console.log("trew")
-            if(!hasDistance(child, x, y, radius)){
-                console.log("324243")
-                return "Свердління має проводитися не менше ніж за 5 мм від іншого отвору"
-            }
+    for(const child of selectedPart.opStore.getDrills()){
+        console.log("trew")
+        if(!hasDistance(child, x, y, radius)){
+            console.log("324243")
+            return "Свердління має проводитися не менше ніж за 5 мм від іншого отвору"
         }
     }
 

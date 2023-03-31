@@ -1,22 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
 
-class Operation {
-    id:string
-    type?: string
-    @observable x?:number
-    @observable y?:number
-    @observable depth?:number
-
-    constructor(x?:number, y?:number, depth?:number) {
-        this.id = uuidv4()
-        this.x = x
-        this.y = y
-        this.depth = depth
-        makeObservable(this)
-    }
-}
-
 export class Drill{
     id:string
     type: string
