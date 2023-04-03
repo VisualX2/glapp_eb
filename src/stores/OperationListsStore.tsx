@@ -5,6 +5,7 @@ import { CornersStore } from "./CornersStore";
 export class OperationListsStore {
     @observable private drills: (op.Drill)[]
     @observable corners: CornersStore
+    
 
     constructor(){
         this.drills = []

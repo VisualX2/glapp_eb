@@ -20,3 +20,4 @@ export const addCornerCut = (selectedPart: PartStore, width:number, height: numb
     const d = new op.CornerCut(width,height,corner)
     selectedPart.opStore.corners.addOperation(d,corner)
 }
+
