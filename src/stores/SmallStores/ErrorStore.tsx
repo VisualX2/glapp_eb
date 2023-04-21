@@ -8,7 +8,7 @@ export class ErrorStore {
     @observable ErrorString
 
     constructor(ErrorString:String) {
-        this.ErrorString = ErrorStore
+        this.ErrorString = ErrorString
         makeObservable(this)
     }
 } 

@@ -35,6 +35,7 @@ export const DrillDialog: React.FC<DrillDialogParameters> = observer(({selectedP
 
     const [openError, setOpenError] = React.useState(false);
     const [errorText, setErrorText] = React.useState("");
+    const [tool, setTool] = React.useState([]);
 
     const [text_one, setText_one] = React.useState("");
     const [text_two, setText_two] = React.useState("");
@@ -120,7 +121,7 @@ export const DrillDialog: React.FC<DrillDialogParameters> = observer(({selectedP
                                 </Typography>
                             </Grid2>
                             <Grid2 xs={9}>
-                                <Select label="Question">
+                                <Select label="Question" onChange={handleToolChange}>
                                     {tools.tools.map((tool) => (
                                         <MenuItem value={[tool.diameter.toString(), tool.maxdepth.toString()]}>
                                             Діаметр: {tool.diameter} Макс. Глибина: {tool.maxdepth === 9999 ? "Наскрізна" : tool.maxdepth}
