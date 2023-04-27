@@ -7,6 +7,7 @@ import { EditPartStage } from './components/EditPartStage';
 import { useStore } from './stores/StoreContext';
 import { observer } from 'mobx-react';
 import { TableOfOperations } from './components/TableOfOperations';
+import { TopPanel } from './components/TabPanel';
 
 
 const App =  observer(() =>{
@@ -19,11 +20,14 @@ const App =  observer(() =>{
   }
   return (
     <div className="App">
+      <TopPanel></TopPanel>
+      <div className='al'>
       <ParameterTable></ParameterTable>
       <OperationMenu></OperationMenu>
       <ModalSelectPart></ModalSelectPart>
       {eps}
       {table}
+      </div>
     </div>
   );
 })

@@ -13,7 +13,7 @@ export const ParameterTable = observer(() => { //Кнопка
     const handleClickAddPart = (e:any) => ButtonFunctions.handleAddPart(store)
     const handleClickEditPart = (e:any) => ButtonFunctions.handleEditPart(store)
     return(
-        <Drawer className="menuSliderContainer" variant="persistent" anchor="left" open = {store.utilStore.mainmenudrawerstate}>
+        <Drawer className="menuSliderContainer"  variant="persistent" anchor="left" open = {store.utilStore.mainmenudrawerstate}>
             <ParameterButton func = {ButtonFunctions.handleSelectTexture} name = {"Обрати декор"}></ParameterButton>
             <ParameterButton func = {ButtonFunctions.handleSelectSize} name = {"Обрати розміри"}></ParameterButton>
             <ParameterButton func = {handleClickAddPart} name = {"Додати деталь"}></ParameterButton>

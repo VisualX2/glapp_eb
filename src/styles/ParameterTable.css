@@ -2,10 +2,12 @@
     display: flex;
     max-width: 15%;
     flex-direction: column;
+    
 }
 
 .menuSliderContainer {
     width: 250px;
     background-color: rgb(231, 231, 231);
     height: 100%;
+    margin-top: 32px;
 }
