@@ -32,7 +32,7 @@ const style = {
 
 export const OperationMenu = observer(() => {
     const store = useStore()
-    var selectedPart = store.parts.find(i => i.getPartId() === store.utilStore.getSelectedPart())!
+    var selectedPart = store.parts.find(i => i.getPartId() === store.utilStore.selectedpart)!
     const [openCut, setOpenCut] = React.useState(false);
     const [openCutFace, setOpenCutFace] = React.useState(false);
     const [openRadius, setOpenRadius] = React.useState(false);
