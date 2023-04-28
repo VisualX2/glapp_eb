@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/glapp_eb/static/css/main.5fa20f37.css",
-    "main.js": "/glapp_eb/static/js/main.1d81ed36.js",
-    "static/media/OpenSans-Bold.ttf": "/glapp_eb/static/media/OpenSans-Bold.fa428cdd2e334e2be904.ttf",
+    "main.css": "/glapp_eb/static/css/main.30996761.css",
+    "main.js": "/glapp_eb/static/js/main.c75fb1d1.js",
+    "static/media/Roboto-Regular.ttf": "/glapp_eb/static/media/Roboto-Regular.160d7a6ac26376e5e977.ttf",
     "index.html": "/glapp_eb/index.html",
-    "main.5fa20f37.css.map": "/glapp_eb/static/css/main.5fa20f37.css.map",
-    "main.1d81ed36.js.map": "/glapp_eb/static/js/main.1d81ed36.js.map"
+    "main.30996761.css.map": "/glapp_eb/static/css/main.30996761.css.map",
+    "main.c75fb1d1.js.map": "/glapp_eb/static/js/main.c75fb1d1.js.map"
   },
   "entrypoints": [
-    "static/css/main.5fa20f37.css",
-    "static/js/main.1d81ed36.js"
+    "static/css/main.30996761.css",
+    "static/js/main.c75fb1d1.js"
   ]
 }
