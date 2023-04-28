@@ -14,10 +14,13 @@ import { SideGrooveOperation } from "./XNCOperationComponents/SideGrooveOperatio
 import { PCutOperation } from "./XNCOperationComponents/PCutOperation"
 import { CornerCutOperation } from "./XNCOperationComponents/CornerCutOperation"
 
+type EditPartStage = {
+    part:string;
+}
 
-export const EditPartStage = observer(() => {
+export const EditPartStage: React.FC<EditPartStage> = observer(({part}): React.ReactElement => {
     const store = useStore()
-    var selectedPart = store.parts.find(i => i.getPartId() === store.utilStore.getSelectedPart())!
+    var selectedPart = store.parts.find(i => i.getPartId() === part)!
     selectedPart.getList().map(() => true);
     console.log(store.parts)
     console.log(store.utilStore.getSelectedPart())

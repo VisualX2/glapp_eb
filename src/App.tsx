@@ -15,14 +15,13 @@ const App =  observer(() =>{
   var eps
   var table
   if(store.utilStore.selectedpart !== "") {
-    eps = <EditPartStage></EditPartStage>
+    eps = <EditPartStage part={store.utilStore.selectedpart}></EditPartStage>
     table = <TableOfOperations></TableOfOperations>
   }
   return (
     <div className="App">
       <TopPanel></TopPanel>
-      <div className='al'>
-      <ParameterTable></ParameterTable>
+      <div className='a'>
       <OperationMenu></OperationMenu>
       <ModalSelectPart></ModalSelectPart>
       {eps}

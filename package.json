@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.11.9",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.6",
     "@mui/styled-engine-sc": "^5.11.0",
     "@mui/x-data-grid": "^6.0.0",
@@ -19,7 +19,7 @@
     "@types/react-dom": "^18.0.9",
     "@types/uuid": "^9.0.0",
     "ag-grid-community": "^29.2.0",
-    "ag-grid-react": "^29.1.0",
+    "ag-grid-react": "^29.3.3",
     "konva": "^8.3.14",
     "mobx": "^6.7.0",
     "mobx-react": "^7.6.0",

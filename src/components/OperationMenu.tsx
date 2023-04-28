@@ -201,7 +201,7 @@ export const OperationMenu = observer(() => {
     };
 
     return (
-        <Drawer className="opMenuStyle" sx={{top: "50"}} variant="persistent" anchor="left" open={store.utilStore.operationmenudrawerstate}>
+        <Drawer className="opMenuStyle" sx={{top: "32px"}} variant="persistent" anchor="left" open={store.utilStore.operationmenudrawerstate}>
             <Button onClick={handleClick2} sx={{ fontSize: "10px", textTransform: "none", paddingBottom: "0px", color: "black" }} className="Button">Крайкування</Button>
             <DrillDialog selectedPart={selectedPart}></DrillDialog>
             

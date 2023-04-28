@@ -25,6 +25,9 @@ export class UtilStore implements IUtilStore{
         this.sevst = new SelvedgeMode()
     }
 
+    @action setSelectedPart(id:string){
+        this.selectedpart = id
+    }
     @action getSelectedPart() {
         return this.selectedpart
     }

@@ -22,7 +22,7 @@ export const handleEditPart = (store: Store) => {
 };
 
 export const setId = (store: Store, id:string) => {
-    store.utilStore.selectedpart = id
+    store.utilStore.setSelectedPart(id)
     store.utilStore.modalsel.setModalSelectFalse()
     console.log(store.utilStore.selectedpart)
     store.utilStore.setMainMenuFalse()
